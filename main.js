@@ -1,4 +1,4 @@
-import {SEARCH, search, initialStore} from './actions';
+import {SEARCH, search, initialStore, searchFiltr, FILTR} from './actions';
 import  ReactDOM  from 'react-dom';
 import { Provider } from 'react-redux'
 import {store} from './store';
@@ -10,10 +10,19 @@ import {connect} from 'react-redux';
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 function mapStateToProps (state) {
-
+    //console.log(state);
     return {
-        search: state.symbol
+        search: state
+        //contactData: state
     }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    remove: () => {
+      store.dispatch(searchFiltr(contactData));
+    }
+  };
 };
 
 const Containerr = connect(mapStateToProps)(App);

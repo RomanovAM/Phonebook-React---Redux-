@@ -1,6 +1,8 @@
 
 /*Определяем действия*/
-export const    SEARCH = "SEARCH";
+export const    SEARCH = "SEARCH",
+                FILTR = "FILTR";
+
 
 
 
@@ -39,5 +41,12 @@ export function search(symbol) {
   return {
     type: SEARCH,
     symbol: symbol
+    }
+};
+export function searchFiltr(contactData) {
+  console.log(contactData);
+  return {
+    type: FILTR,
+    contactData: contactData
     }
 };

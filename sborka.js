@@ -67,9 +67,18 @@
 	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 	function mapStateToProps(state) {
-
+	    //console.log(state);
 	    return {
-	        search: state.symbol
+	        search: state
+	        //contactData: state
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        remove: function remove() {
+	            _store.store.dispatch((0, _actions.searchFiltr)(contactData));
+	        }
 	    };
 	};
 
@@ -23290,14 +23299,33 @@
 	    key: 'contactSearch',
 	    value: function contactSearch(e) {
 	      _store.store.dispatch((0, _actions.search)(e.target.value));
+	      //console.log(this.Search/*.props.data.search*/);
+	    }
+	  }, {
+	    key: 'dataFiltr',
+	    value: function dataFiltr(data) {
+	      //console.log(data.search);
+	      var searchInput = data.search.symbol.toLowerCase();
+	      var contactData = data.search.contactData.filter(function (element) {
+	        var searchSurname = element.surname.toLowerCase();
+	        return searchSurname.indexOf(searchInput) !== -1;
+	      });
+	      //console.log(contactData);
+	      _store.store.dispatch((0, _actions.searchFiltr)(contactData));
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      //  console.log(this.props.data.search.contactData);
+	      //this.dataFiltr(this.props.data);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mainsearch' },
-	        _react2.default.createElement('input', { className: 'input', defaultValue: 'введите Фамилию', onChange: this.contactSearch })
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'search' },
+	          _react2.default.createElement('input', { className: 'input', defaultValue: 'введите Фамилию', onChange: this.contactSearch })
+	        )
 	      );
 	    }
 	  }]);
@@ -23323,8 +23351,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mainComponent' },
-	        _react2.default.createElement(Search, null),
-	        this.props.search
+	        _react2.default.createElement(Search, { data: this.props })
 	      );
 	    }
 	  }]);
@@ -23345,9 +23372,11 @@
 	  value: true
 	});
 	exports.search = search;
+	exports.searchFiltr = searchFiltr;
 
 	/*Определяем действия*/
-	var SEARCH = exports.SEARCH = "SEARCH";
+	var SEARCH = exports.SEARCH = "SEARCH",
+	    FILTR = exports.FILTR = "FILTR";
 
 	var initialStore = exports.initialStore = {
 	  contactData: [{
@@ -23381,6 +23410,13 @@
 	    symbol: symbol
 	  };
 	};
+	function searchFiltr(contactData) {
+	  console.log(contactData);
+	  return {
+	    type: FILTR,
+	    contactData: contactData
+	  };
+	};
 
 /***/ },
 /* 204 */
@@ -23401,15 +23437,22 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? _actions.initialStore : arguments[0];
 	  var action = arguments[1];
 
-	  //console.log(state.searchInput.symbol);
-	  //console.log(action.symbol);
-	  //let a = state.searchInput.symbol + action.symbol;
-	  //console.log(state.searchInput.symbol);
+
 	  switch (action.type) {
+	    /*--------------------------------------------*/
 	    case _actions.SEARCH:
+
 	      return Object.assign({}, state, {
 	        symbol: action.symbol
 	      });
+	    /*-------------------------------------------*/
+	    case _actions.FILTR:
+	      console.log(action);
+	      return Object.assign({}, state, {
+	        contactData: action.contactData
+	      });
+	      /*----------------------------------------------------*/
+	      break;
 	    default:
 	      return state;
 	  };
