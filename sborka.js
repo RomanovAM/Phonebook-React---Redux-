@@ -58,9 +58,13 @@
 
 	var _container = __webpack_require__(202);
 
+	var _container2 = _interopRequireDefault(_container);
+
 	var _react = __webpack_require__(168);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(179);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -74,15 +78,15 @@
 	    };
 	};
 
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	function mapDispatchToProps(dispatch) {
 	    return {
-	        remove: function remove() {
-	            _store.store.dispatch((0, _actions.searchFiltr)(contactData));
+	        contactSearch: function contactSearch(e) {
+	            dispatch((0, _actions.search)(e.target.value));
 	        }
 	    };
 	};
 
-	var Containerr = (0, _reactRedux.connect)(mapStateToProps)(_container.App);
+	var Containerr = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_container.App);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
@@ -23260,7 +23264,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.App = exports.Search = undefined;
+	exports.App = exports.Search = exports.List = exports.Contact = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -23286,8 +23290,115 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Search = exports.Search = function (_Component) {
-	  _inherits(Search, _Component);
+	var Contact = exports.Contact = function (_Component) {
+	  _inherits(Contact, _Component);
+
+	  function Contact() {
+	    _classCallCheck(this, Contact);
+
+	    return _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).apply(this, arguments));
+	  }
+
+	  _createClass(Contact, [{
+	    key: 'render',
+	    value: function render() {
+	      var number = this.props.data.number,
+	          surname = this.props.data.surname,
+	          name = this.props.data.name,
+	          patronymic = this.props.data.patronymic;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'list' },
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'contact_number' },
+	          'Телефон: ',
+	          _react2.default.createElement('input', { value: number })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'contact_surname' },
+	          'Фамилия: ',
+	          _react2.default.createElement('input', { value: surname })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: "contact_name" },
+	          'Имя: ',
+	          _react2.default.createElement('input', { value: name })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: "contact_patronymic" },
+	          'Отчество: ',
+	          _react2.default.createElement('input', { value: patronymic })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: "contact_button" },
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Редактировать контакт'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            'Удалить контакт'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Contact;
+	}(_react.Component);
+
+	var List = exports.List = function (_Component2) {
+	  _inherits(List, _Component2);
+
+	  function List() {
+	    _classCallCheck(this, List);
+
+	    return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
+	  }
+
+	  _createClass(List, [{
+	    key: 'render',
+	    value: function render() {
+	      var data = this.props.data;
+	      var list = void 0;
+	      if (data.length > 0) {
+	        list = data.map(function (item, index) {
+	          return _react2.default.createElement(
+	            'div',
+	            { key: index },
+	            _react2.default.createElement(Contact, { data: item })
+	          );
+	        });
+	      } else {
+	        list = _react2.default.createElement(
+	          'p',
+	          null,
+	          'К сожалению справочник пуст'
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'cntact_list' },
+	        list
+	      );
+	    }
+	  }]);
+
+	  return List;
+	}(_react.Component);
+
+	;
+
+	var Search = exports.Search = function (_Component3) {
+	  _inherits(Search, _Component3);
 
 	  function Search() {
 	    _classCallCheck(this, Search);
@@ -23296,13 +23407,9 @@
 	  }
 
 	  _createClass(Search, [{
-	    key: 'contactSearch',
-	    value: function contactSearch(e) {
-	      _store.store.dispatch((0, _actions.search)(e.target.value));
-	      //console.log(this.Search/*.props.data.search*/);
-	    }
-	  }, {
 	    key: 'dataFiltr',
+
+	    /***************************************************************************/
 	    value: function dataFiltr(data) {
 	      //console.log(data.search);
 	      var searchInput = data.search.symbol.toLowerCase();
@@ -23315,17 +23422,25 @@
 	    }
 	  }, {
 	    key: 'render',
+
+	    /************************************************************************/
 	    value: function render() {
-	      //  console.log(this.props.data.search.contactData);
-	      //this.dataFiltr(this.props.data);
+	      var searchInput = this.props.data.search.symbol.toLowerCase();
+	      var contactData = this.props.data.search.contactData.filter(function (element) {
+	        var searchSurname = element.surname.toLowerCase();
+	        return searchSurname.indexOf(searchInput) !== -1;
+	      });
+	      console.log(contactData);
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mainsearch' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'search' },
-	          _react2.default.createElement('input', { className: 'input', defaultValue: 'введите Фамилию', onChange: this.contactSearch })
-	        )
+	          _react2.default.createElement('input', { className: 'input', defaultValue: 'введите Фамилию', onChange: this.props.data.contactSearch })
+	        ),
+	        _react2.default.createElement(List, { data: contactData })
 	      );
 	    }
 	  }]);
@@ -23334,10 +23449,11 @@
 	}(_react.Component);
 
 	;
+
 	/********************************************************************************/
 
-	var App = exports.App = function (_Component2) {
-	  _inherits(App, _Component2);
+	var App = exports.App = function (_Component4) {
+	  _inherits(App, _Component4);
 
 	  function App() {
 	    _classCallCheck(this, App);
@@ -23405,13 +23521,14 @@
 	/*Создаём действие*/
 
 	function search(symbol) {
+	  console.log("Создание действия SEARCH, Получение строки " + symbol);
 	  return {
 	    type: SEARCH,
 	    symbol: symbol
 	  };
 	};
 	function searchFiltr(contactData) {
-	  console.log(contactData);
+	  console.log("Создание действия FILTR, Получение массива контактов " + contactData);
 	  return {
 	    type: FILTR,
 	    contactData: contactData
@@ -23447,7 +23564,7 @@
 	      });
 	    /*-------------------------------------------*/
 	    case _actions.FILTR:
-	      console.log(action);
+
 	      return Object.assign({}, state, {
 	        contactData: action.contactData
 	      });

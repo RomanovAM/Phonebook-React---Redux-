@@ -15,7 +15,7 @@ export function reducer (state = initialStore, action){
                   });
     /*-------------------------------------------*/
       case FILTR:
-            console.log(action);
+            
             return Object.assign({}, state, {
                     contactData: action.contactData
                   });

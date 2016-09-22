@@ -38,13 +38,14 @@ export let initialStore = {
 /*Создаём действие*/
 
 export function search(symbol) {
+  console.log(`Создание действия SEARCH, Получение строки ${symbol}`);
   return {
     type: SEARCH,
     symbol: symbol
     }
 };
 export function searchFiltr(contactData) {
-  console.log(contactData);
+  console.log(`Создание действия FILTR, Получение массива контактов ${contactData}`);
   return {
     type: FILTR,
     contactData: contactData
