@@ -1,22 +1,41 @@
-import {SEARCH, search, initialStore} from './actions';
+import {SEARCH, more, MORE,hide, HIDE} from './actions';
+import {initialStore} from './store';
 import  ReactDOM  from 'react-dom';
 import { Provider } from 'react-redux'
 import {store} from './store';
 import {App} from './container';
+import Search from './container';
 import React from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {search} from './actions';
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 function mapStateToProps (state) {
-
     return {
-        search: state.symbol
+        search: state,
+        more: state
     }
 };
 
-const Containerr = connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    contactSearch: (e) => {
+      dispatch(search(e.target.value))
+    },
+    clickMore: (e) => {
+      dispatch(more(e.target.id))
+    },
+    clickHide: (e) => {
+      dispatch(more(e.target.id))
+    }
+  }
+};
+
+
+const Containerr = connect(mapStateToProps, mapDispatchToProps)(App);
 
 ReactDOM.render(
     <Provider store={store}>

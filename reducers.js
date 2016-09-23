@@ -1,19 +1,33 @@
-import {initialStore} from './actions';
+import {initialStore} from './store';
 import {SEARCH} from './actions';
 import {search} from './actions';
 import {store} from './store';
+import {more, MORE,hide,HIDE} from './actions';
 
 export function reducer (state = initialStore, action){
-  //console.log(state.searchInput.symbol);
-  //console.log(action.symbol);
-  //let a = state.searchInput.symbol + action.symbol;
-  //console.log(state.searchInput.symbol);
+
   switch (action.type) {
+    /*--------------------------------------------*/
       case SEARCH:
+
            return Object.assign({}, state, {
                     symbol: action.symbol
                   });
-      default:
-            return state
+    /*-------------------------------------------*/
+      case MORE:
+
+            return Object.assign({}, state, {
+                    id: action.id
+                  });
+    /*-------------------------------------------*/
+      case HIDE:
+
+            return Object.assign({}, state, {
+                    id: action.id
+                  });
+/*----------------------------------------------------*/
+      break;
+        default:
+          return state
   };
 };
