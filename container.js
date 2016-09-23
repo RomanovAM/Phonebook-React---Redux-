@@ -61,7 +61,8 @@ export class Search extends Component {
     return (
       <div className='mainsearch'>
         <div className='search'>
-          <input className='input' defaultValue='введите Фамилию' onChange={this.props.data.contactSearch}/>
+          Быстрый поиск:
+          <input className='input_search' defaultValue='введите Фамилию' onChange={this.props.data.contactSearch}/>
         </div>
         <List onclk={this.props.data.clickMore} data={contactData}/>
       </div>

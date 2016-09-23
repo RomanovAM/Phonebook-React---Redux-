@@ -23436,7 +23436,8 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'search' },
-	          _react2.default.createElement('input', { className: 'input', defaultValue: 'введите Фамилию', onChange: this.props.data.contactSearch })
+	          'Быстрый поиск:',
+	          _react2.default.createElement('input', { className: 'input_search', defaultValue: 'введите Фамилию', onChange: this.props.data.contactSearch })
 	        ),
 	        _react2.default.createElement(List, { onclk: this.props.data.clickMore, data: contactData })
 	      );
